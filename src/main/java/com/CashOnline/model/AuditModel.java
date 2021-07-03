@@ -1,4 +1,4 @@
-package com.example.CashOnlineChallenge.model;
+package com.CashOnline.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
