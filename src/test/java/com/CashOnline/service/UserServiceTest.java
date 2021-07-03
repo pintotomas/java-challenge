@@ -57,4 +57,17 @@ public class UserServiceTest {
         userCreateRequestDto.setLastName("lastName");
         Assertions.assertDoesNotThrow(() -> userService.create(userCreateRequestDto));
     }
+
+    @Test
+    public void shouldThrowExceptionWhenDeleteNonExistentUser() {
+        when(userRepository.findById(1L)).thenReturn(Optional.empty());
+        Assertions.assertThrows(UserNotFoundException.class, () -> userService.deleteById(1L));
+    }
+
+    @Test
+    public void shouldNotThrowExceptionWhenDeleteNonExistentUser() {
+        when(userRepository.findById(1L)).thenReturn(Optional.of
+                (new User("mail@example.com", "firstName", "lastName")));
+        Assertions.assertDoesNotThrow(() -> userService.deleteById(1L));
+    }
 }

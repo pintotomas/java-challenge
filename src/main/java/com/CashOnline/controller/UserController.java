@@ -8,7 +8,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import com.CashOnline.service.UserService;
 
@@ -55,6 +54,18 @@ public class UserController {
         } catch (UserAlreadyExistsException e) {
             log.error(e.getLocalizedMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> delete(@PathVariable @Min(1) Long id) {
+        log.info("Requested to delete user with id {}" + id);
+        try {
+            userService.deleteById(id);
+            return ResponseEntity.ok().build();
+        } catch (UserNotFoundException e) {
+            log.error(e.getLocalizedMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
 }
