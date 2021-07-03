@@ -22,7 +22,7 @@ public class UserDto {
         this.mail = user.getEmail();
         this.firstName = user.getFirstName();
         this.lastName = user.getLastName();
-        this.createdAt = user.getCreatedAt();
-        this.updatedAt = user.getUpdatedAt();
+        this.createdAt = user.getCreated();
+        this.updatedAt = user.getUpdated();
     }
 }
