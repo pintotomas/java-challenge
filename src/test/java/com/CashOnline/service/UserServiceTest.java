@@ -1,5 +1,7 @@
 package com.CashOnline.service;
 
+import com.CashOnline.dto.UserCreateRequestDto;
+import com.CashOnline.exceptions.UserAlreadyExistsException;
 import com.CashOnline.exceptions.UserNotFoundException;
 import com.CashOnline.model.User;
 import com.CashOnline.repository.UserRepository;
@@ -31,7 +33,28 @@ public class UserServiceTest {
     @Test
     public void shouldNotThrowExceptionWhenGetByIdFound() {
         when(userRepository.findById(1L)).thenReturn(Optional.of(
-                new User("mail@example.com", "firstName", "LastName")));
+                new User("mail@example.com", "firstName", "lastName")));
         Assertions.assertDoesNotThrow(() -> userService.getById(1L));
+    }
+
+    @Test
+    public void shouldThrowExceptionWhenCreateWithDuplicatedMail() {
+        when(userRepository.findByEmail("mail@example.com")).thenReturn(Optional.of(
+                new User("mail@example.com", "firstName", "LastName")));
+        UserCreateRequestDto userCreateRequestDto = new UserCreateRequestDto();
+        userCreateRequestDto.setEmail("mail@example.com");
+        userCreateRequestDto.setFirstName("firstName");
+        userCreateRequestDto.setLastName("lastName");
+        Assertions.assertThrows(UserAlreadyExistsException.class, () -> userService.create(userCreateRequestDto));
+    }
+
+    @Test
+    public void shouldNotThrowExceptionWhenCreateWithNotDuplicatedMail() {
+        when(userRepository.findByEmail("mail@example.com")).thenReturn(Optional.empty());
+        UserCreateRequestDto userCreateRequestDto = new UserCreateRequestDto();
+        userCreateRequestDto.setEmail("mail@example.com");
+        userCreateRequestDto.setFirstName("firstName");
+        userCreateRequestDto.setLastName("lastName");
+        Assertions.assertDoesNotThrow(() -> userService.create(userCreateRequestDto));
     }
 }

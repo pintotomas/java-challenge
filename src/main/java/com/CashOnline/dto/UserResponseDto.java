@@ -8,7 +8,7 @@ import java.util.Date;
 
 @Getter
 @Setter
-public class UserDto {
+public class UserResponseDto {
 
     private Long id;
     private String mail;
@@ -17,7 +17,7 @@ public class UserDto {
     private Date createdAt;
     private Date updatedAt;
 
-    public UserDto(User user) {
+    public UserResponseDto(User user) {
         this.id = user.getId();
         this.mail = user.getEmail();
         this.firstName = user.getFirstName();

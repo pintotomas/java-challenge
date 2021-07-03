@@ -1,17 +1,18 @@
 package com.CashOnline.controller;
 
-import com.CashOnline.dto.UserDto;
+import com.CashOnline.dto.UserCreateRequestDto;
+import com.CashOnline.dto.UserResponseDto;
+import com.CashOnline.exceptions.UserAlreadyExistsException;
 import com.CashOnline.exceptions.UserNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 import com.CashOnline.service.UserService;
 
+import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import java.util.Collection;
 import java.util.stream.Collectors;
@@ -26,20 +27,34 @@ public class UserController {
     UserService userService;
 
     @GetMapping
-    public ResponseEntity<Collection<UserDto>> getAll() {
+    public ResponseEntity<Collection<UserResponseDto>> getAll() {
         log.info("Requested to get all users");
         return ResponseEntity.ok(userService.getAll().stream().map(
-                user -> new UserDto(user)
+                user -> new UserResponseDto(user)
         ).collect(Collectors.toList()));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserDto> getById(@PathVariable @Min(1) Long id) {
+    public ResponseEntity<UserResponseDto> getById(@PathVariable @Min(1) Long id) {
         try {
             log.info("Requested to get user with id {}", id);
-            return ResponseEntity.ok(new UserDto(userService.getById(id)));
+            return ResponseEntity.ok(new UserResponseDto(userService.getById(id)));
         } catch (UserNotFoundException e) {
+            log.error(e.getLocalizedMessage());
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
+
+    @PostMapping
+    public ResponseEntity<UserResponseDto> create(@RequestBody @Valid UserCreateRequestDto userCreateRequestDto) {
+        try {
+            log.info("Requested to create user with fields: email: " + userCreateRequestDto.getEmail()
+            + ", first name: " + userCreateRequestDto.getFirstName() + " last name: " + userCreateRequestDto.getLastName());
+            return ResponseEntity.ok(new UserResponseDto(userService.create(userCreateRequestDto)));
+
+        } catch (UserAlreadyExistsException e) {
+            log.error(e.getLocalizedMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
 }

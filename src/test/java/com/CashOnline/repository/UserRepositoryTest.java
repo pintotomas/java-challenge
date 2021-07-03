@@ -16,4 +16,14 @@ public class UserRepositoryTest {
     public void shouldFindOneUser() {
         Assertions.assertEquals(1, userRepository.findAll().size());
     }
+
+    @Test
+    public void shouldFindUserByEmail() {
+        Assertions.assertTrue(!userRepository.findByEmail("test@example.com").isEmpty());
+    }
+
+    @Test
+    public void shouldNotFindUserByEmail() {
+        Assertions.assertTrue(userRepository.findByEmail("test2@example.com").isEmpty());
+    }
 }
