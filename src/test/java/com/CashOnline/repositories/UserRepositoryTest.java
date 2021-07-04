@@ -1,4 +1,4 @@
-package com.CashOnline.repository;
+package com.CashOnline.repositories;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -13,8 +13,8 @@ public class UserRepositoryTest {
     UserRepository userRepository;
 
     @Test
-    public void shouldFindOneUser() {
-        Assertions.assertEquals(1, userRepository.findAll().size());
+    public void shouldFindTwoUsers() {
+        Assertions.assertEquals(2, userRepository.findAll().size());
     }
 
     @Test

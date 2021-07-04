@@ -1,4 +1,4 @@
-package com.CashOnline.controller;
+package com.CashOnline.controllers;
 
 import com.CashOnline.dto.UserCreateRequestDto;
 import com.CashOnline.dto.UserResponseDto;
@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.CashOnline.service.UserService;
+import com.CashOnline.services.UserService;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Min;

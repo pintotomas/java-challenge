@@ -1,4 +1,4 @@
-package com.CashOnline.repository;
+package com.CashOnline.repositories;
 
 import com.CashOnline.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;

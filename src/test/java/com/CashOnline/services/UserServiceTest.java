@@ -1,10 +1,10 @@
-package com.CashOnline.service;
+package com.CashOnline.services;
 
 import com.CashOnline.dto.UserCreateRequestDto;
 import com.CashOnline.exceptions.UserAlreadyExistsException;
 import com.CashOnline.exceptions.UserNotFoundException;
 import com.CashOnline.model.User;
-import com.CashOnline.repository.UserRepository;
+import com.CashOnline.repositories.UserRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

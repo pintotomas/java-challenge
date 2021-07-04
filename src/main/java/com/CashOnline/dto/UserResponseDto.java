@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -16,6 +18,7 @@ public class UserResponseDto {
     private String lastName;
     private Date createdAt;
     private Date updatedAt;
+    private List<LoanResponseDto> loans;
 
     public UserResponseDto(User user) {
         this.id = user.getId();
@@ -24,5 +27,6 @@ public class UserResponseDto {
         this.lastName = user.getLastName();
         this.createdAt = user.getCreated();
         this.updatedAt = user.getUpdated();
+        this.loans = user.getLoans().stream().map(loan -> new LoanResponseDto(loan)).collect(Collectors.toList());
     }
 }
