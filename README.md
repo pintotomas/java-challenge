@@ -17,6 +17,7 @@ Luego abrimos una terminal en la carpeta raiz del proyecto y corremos el siguien
 ```mvn spring-boot:run```
 
 Para correr la aplicacion utlizando docker, abrir una terminal en este directorio y correr los siguientes comandos:
+
 ```cd src/main/docker```
 
 ```docker-compose up```
