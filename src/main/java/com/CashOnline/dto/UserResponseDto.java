@@ -4,20 +4,17 @@ import com.CashOnline.model.User;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Getter
 @Setter
-public class UserResponseDto {
+public class UserResponseDto extends AuditModelDto {
 
     private Long id;
     private String mail;
     private String firstName;
     private String lastName;
-    private Date createdAt;
-    private Date updatedAt;
     private List<LoanResponseDto> loans;
 
     public UserResponseDto(User user) {

@@ -23,4 +23,9 @@ public class Loan extends AuditModel {
     @ManyToOne
     User user;
 
+    public Loan(Double total, User user) {
+        this.total = total;
+        this.user = user;
+    }
+
 }

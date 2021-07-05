@@ -1,8 +1,6 @@
 package com.CashOnline.controllers;
-import com.CashOnline.dto.LoanPageDto;
-import com.CashOnline.dto.LoanResponseDto;
-import com.CashOnline.dto.UserCreateRequestDto;
-import com.CashOnline.dto.UserResponseDto;
+import com.CashOnline.dto.*;
+import com.CashOnline.exceptions.LoanCannotBeNegativeException;
 import com.CashOnline.exceptions.UserAlreadyExistsException;
 import com.CashOnline.exceptions.UserNotFoundException;
 import com.CashOnline.services.LoanService;
@@ -37,6 +35,19 @@ public class LoanController {
             ) {
         log.info("Requested to filter loans with params: page {} size {} user_id {}", page, size, userId.orElse(null));
         return ResponseEntity.ok(loanService.getLoansFilteredAndPaginated(page - 1, size, userId));
+    }
+
+    @PostMapping
+    public ResponseEntity<LoanResponseDto> create(@RequestBody @Valid LoanCreateRequestDto loanCreateRequestDto) {
+        try {
+            log.info("Requested to create loan with fields: userId: " + loanCreateRequestDto.getUserId()
+                    + ", total: " + loanCreateRequestDto.getTotal());
+            return ResponseEntity.ok(new LoanResponseDto(loanService.create(loanCreateRequestDto)));
+
+        } catch (UserNotFoundException | LoanCannotBeNegativeException e) {
+            log.error(e.getLocalizedMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
     }
 }
 
