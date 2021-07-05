@@ -1,0 +1,30 @@
+version: '2'
+
+services:
+  app:
+    image: 'docker-spring-boot-postgres:latest'
+    build:
+      context: .
+    container_name: app
+    depends_on:
+      - db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/cashonline
+      - SPRING_DATASOURCE_USERNAME=cashonline
+      - SPRING_DATASOURCE_PASSWORD=cashonline
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=none
+      - SPRING_DATASOURCE_INITIALIZATION_MODE=always
+      - SPRING_JPA_PROPERTIES_HIBERNATE_LOB_NON_CONTEXTUAL_CREATION=true
+    ports:
+      - "8080:8080"
+  db:
+    image: 'postgres:13.1-alpine'
+    container_name: db
+    environment:
+      - POSTGRES_USER=cashonline
+      - POSTGRES_PASSWORD=cashonline
+      - POSTGRES_DB=cashonline"
+    ports:
+      - '5432:5432'
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data
