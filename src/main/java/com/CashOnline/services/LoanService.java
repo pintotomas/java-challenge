@@ -1,11 +1,12 @@
 package com.CashOnline.services;
 
-import com.CashOnline.dto.*;
+import com.CashOnline.dto.FilterLoanDto;
+import com.CashOnline.dto.LoanCreateRequestDto;
+import com.CashOnline.dto.LoanPageDto;
 import com.CashOnline.exceptions.LoanCannotBeNegativeException;
 import com.CashOnline.exceptions.UserNotFoundException;
 import com.CashOnline.model.Loan;
 import com.CashOnline.repositories.LoanRepository;
-import com.CashOnline.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

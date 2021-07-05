@@ -7,6 +7,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.Arrays;
 import java.util.List;
 
 @Entity
@@ -36,7 +37,7 @@ public class User extends AuditModel {
     private String lastName;
 
     @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true, mappedBy="user")
-    private List<Loan> loans;
+    private List<Loan> loans = Arrays.asList();
 
     public User(String mail, String firstName, String lastName) {
         this.email = mail;

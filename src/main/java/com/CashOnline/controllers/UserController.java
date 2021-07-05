@@ -1,9 +1,11 @@
 package com.CashOnline.controllers;
 
+import com.CashOnline.dto.ErrorResponseDto;
 import com.CashOnline.dto.UserCreateRequestDto;
 import com.CashOnline.dto.UserResponseDto;
 import com.CashOnline.exceptions.UserAlreadyExistsException;
 import com.CashOnline.exceptions.UserNotFoundException;
+import com.CashOnline.model.ErrorCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -34,18 +36,18 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserResponseDto> getById(@PathVariable @Min(1) Long id) {
+    public ResponseEntity<?> getById(@PathVariable @Min(1) Long id) {
         try {
             log.info("Requested to get user with id {}", id);
             return ResponseEntity.ok(new UserResponseDto(userService.getById(id)));
         } catch (UserNotFoundException e) {
             log.error(e.getLocalizedMessage());
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponseDto(ErrorCode.USER_NOT_FOUND, e.getLocalizedMessage()));
         }
     }
 
     @PostMapping
-    public ResponseEntity<UserResponseDto> create(@RequestBody @Valid UserCreateRequestDto userCreateRequestDto) {
+    public ResponseEntity<?> create(@RequestBody @Valid UserCreateRequestDto userCreateRequestDto) {
         try {
             log.info("Requested to create user with fields: email: " + userCreateRequestDto.getEmail()
             + ", first name: " + userCreateRequestDto.getFirstName() + " last name: " + userCreateRequestDto.getLastName());
@@ -53,7 +55,7 @@ public class UserController {
 
         } catch (UserAlreadyExistsException e) {
             log.error(e.getLocalizedMessage());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponseDto(ErrorCode.USER_ALREADY_EXIST, e.getLocalizedMessage()));
         }
     }
 
@@ -65,7 +67,7 @@ public class UserController {
             return ResponseEntity.ok().build();
         } catch (UserNotFoundException e) {
             log.error(e.getLocalizedMessage());
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponseDto(ErrorCode.USER_NOT_FOUND, e.getLocalizedMessage()));
         }
     }
 }
