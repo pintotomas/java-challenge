@@ -18,6 +18,7 @@ Luego abrimos una terminal en la carpeta raiz del proyecto y corremos el siguien
 
 Para correr la aplicacion utlizando docker, abrir una terminal en este directorio y correr los siguientes comandos:
 ```cd src/main/docker```
+
 ```docker-compose up```
 
 Para ejecutar las pruebas si no tenemos Postgre instalado en nuestra maquina podemos hacerlo con los containers que se levantaron anteriormente, una vez lenvatemos los contenedores ejecutamos (en la carpeta raiz) ejecutamos:
