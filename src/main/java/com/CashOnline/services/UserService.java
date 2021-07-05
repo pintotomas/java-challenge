@@ -17,7 +17,7 @@ public class UserService {
 
     public User getById(Long id) throws UserNotFoundException {
         return userRepository.findById(id)
-                .orElseThrow(() -> new UserNotFoundException("User with id" + id + " not found"));
+                .orElseThrow(() -> new UserNotFoundException("User with id " + id + " not found"));
     }
 
     public Collection<User> getAll() {
@@ -36,7 +36,7 @@ public class UserService {
 
     public void deleteById(Long id) throws UserNotFoundException {
         if (userRepository.findById(id).isEmpty())  {
-            throw new UserNotFoundException("User with id" + id + " not found");
+            throw new UserNotFoundException("User with id " + id + " not found");
         }
         userRepository.deleteById(id);
     }
