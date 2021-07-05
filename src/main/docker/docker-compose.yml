@@ -23,8 +23,6 @@ services:
     environment:
       - POSTGRES_USER=cashonline
       - POSTGRES_PASSWORD=cashonline
-      - POSTGRES_DB=cashonline"
+      - POSTGRES_DB=cashonline
     ports:
       - '5432:5432'
-    volumes:
-      - ./pgdata:/var/lib/postgresql/data
